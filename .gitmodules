@@ -1,0 +1,9 @@
+[submodule "vim/bundle/vim-pathogen"]
+	path = vim/bundle/vim-pathogen
+	url = https://github.com/tpope/vim-pathogen.git
+[submodule "vim/bundle/vim-colorschemes"]
+	path = vim/bundle/vim-colorschemes
+	url = https://github.com/flazz/vim-colorschemes.git
+[submodule "vim/bundle/vim-deep-space"]
+	path = vim/bundle/vim-deep-space
+	url = https://github.com/tyrannicaltoucan/vim-deep-space.git

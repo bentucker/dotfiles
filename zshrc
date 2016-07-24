@@ -31,6 +31,9 @@ HIST_IGNORE_ALL_DUPS="true"
 HIST_SAVE_NO_DUPS="true"
 MARK_DIRS="true"
 
+# autocorrect exceptions
+alias sudo='nocorrect sudo'
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -39,6 +42,9 @@ plugins=(git osx brew)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core:/usr/local/share/android-sdk-macosx/platform-tools:/usr/local/share/android-sdk-macosx/tools:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/PalmPDK/bin:/opt/PalmSDK/0.1/bin
+export PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core:/usr/local/share/android-sdk-macosx/platform-tools:/usr/local/share/android-sdk-macosx/tools:/usr/local/share/android-ndk:$PATH
 
 source /usr/local/bin/virtualenvwrapper.sh
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
