@@ -1,0 +1,45 @@
+[user]
+	name = Ben Tucker
+	email = ben@tucker.org
+	signkey = 6F3B35EC05B84927
+[core]
+	excludesfile = /Users/ben/.gitignore_global
+	autocrlf = input
+[color]
+	ui = auto
+[gpg]
+	program = gpg2
+[alias]
+    linelog = log --pretty=oneline
+    logahead = log --pretty=oneline origin..HEAD
+    logbehind = log --pretty=oneline HEAD..origin
+    logtoday = log @{yesterday}..HEAD
+    olog = !sh -c 'git linelog $0..HEAD $1 $2 $3 $4'
+    ilog = !sh -c 'git linelog HEAD..$0 $1 $2 $3 $4'
+    rlog = !sh -c 'git log $0..HEAD --reverse $1 $2 $3 $4'
+    logd = log --decorate
+    logg = log --decorate --graph
+    loga = log --decorate --graph --all
+    loggg = log --decorate --graph --oneline
+    logaa = log --decorate --graph --all --oneline
+    logc = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an> %Cgreen%ar%Creset, %C(bold blue)<%an> %Creset%Cgreen%cr%Creset' --abbrev-commit
+    logt = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an> %Cgreen%ar%Creset, %C(bold blue)<%an> %Creset%Cgreen%cr%Creset' --abbrev-commit
+    graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
+    graphlog = "!f() { git graphviz | dot -Tsvg -o git-graph.$(date '+%s').svg /dev/stdin; }; f"
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    cleanup-whitespace = "!f() { git diff --cached --name-only | xargs sed -i -r 's/\\s+'\\$'//'; }; f"
+    cleanup-whitespace-soft = "!f() { git diff --cached --name-only | xargs sed -i -r 's/[ \\t]+(\\s+'\\$')/\\1/'; }; f"
+    cleanup-whitespace-m2 = "!f() { git ls-files | xargs sed -i -r 's/\\s+'\\$'//'; }; f"
+    convert-indent-4Tab = "!f() { git diff --cached --name-only | xargs sed -i -r ':repeat; s/^(\\t*)\\s{4}/\\1\\t/; t repeat'; }; f"
+    diff-branch = "!f() { git diff $(git merge-base $1 $2)..$2; }; f"
+    diff-branch-cached = "!f() { git diff --cached $(git merge-base $1 HEAD); }; f"
+    log-branch = "!f() { git log $(git merge-base $1 $2)..$2; }; f"
+[push]
+    default = current
+[rerere]
+    enabled = true
+[diff]
+    tool = vimdiff
+[merge]
+    tool = vimdiff

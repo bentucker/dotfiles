@@ -12,7 +12,7 @@ ZSH_THEME="alanpeabody"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
@@ -26,9 +26,10 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
 
-HIST_IGNORE_SPACE="true"
-HIST_IGNORE_ALL_DUPS="true"
-HIST_SAVE_NO_DUPS="true"
+setopt HIST_IGNORE_SPACE
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_FIND_NO_DUPS
 MARK_DIRS="true"
 
 # autocorrect exceptions
@@ -37,14 +38,8 @@ alias sudo='nocorrect sudo'
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx brew)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
-
-# Customize to your needs...
-export PATH=/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core:/usr/local/share/android-sdk-macosx/platform-tools:/usr/local/share/android-sdk-macosx/tools:/usr/local/share/android-ndk:$PATH
-
-source /usr/local/bin/virtualenvwrapper.sh
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+source $(pew shell_config)
+source $HOME/.bash_profile
