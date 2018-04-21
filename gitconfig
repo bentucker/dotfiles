@@ -3,7 +3,7 @@
 	email = ben@tucker.org
 	signkey = 6F3B35EC05B84927
 [core]
-	excludesfile = /Users/ben/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	autocrlf = input
 [color]
 	ui = auto
