@@ -19,6 +19,24 @@
 [submodule "vim/bundle/vim-tmux-navigator"]
 	path = vim/bundle/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
-[submodule "zim"]
-	path = zim
-	url = https://github.com/zimfw/zimfw.git
+[submodule "zim/modules/history-substring-search/external"]
+    path = zim/modules/history-substring-search/external
+    url = https://github.com/zsh-users/zsh-history-substring-search.git
+[submodule "zim/modules/completion/external"]
+    path = zim/modules/completion/external
+    url = https://github.com/zsh-users/zsh-completions.git
+[submodule "zim/modules/syntax-highlighting/external"]
+    path = zim/modules/syntax-highlighting/external
+    url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "zim/modules/prompt/external-themes/pure"]
+    path = zim/modules/prompt/external-themes/pure
+    url = https://github.com/sindresorhus/pure.git
+[submodule "zim/modules/prompt/external-themes/liquidprompt"]
+    path = zim/modules/prompt/external-themes/liquidprompt
+    url = https://github.com/nojhan/liquidprompt.git
+[submodule "zim/modules/prompt/external-themes/lean"]
+    path = zim/modules/prompt/external-themes/lean
+    url = https://github.com/miekg/lean
+[submodule "zim/modules/autosuggestions/external"]
+    path = zim/modules/autosuggestions/external
+    url = https://github.com/zsh-users/zsh-autosuggestions.git
