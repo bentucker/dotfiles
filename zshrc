@@ -19,6 +19,7 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
 
+unsetopt NO_CLOBBER
 setopt HIST_IGNORE_SPACE
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
@@ -31,3 +32,7 @@ alias sudo='nocorrect sudo'
 
 source $(pew shell_config)
 source $HOME/.bash_profile
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR=${HOME}/.sdkman
+[[ -s ${SDKMAN_DIR}/bin/sdkman-init.sh ]] && source ${SDKMAN_DIR}/bin/sdkman-init.sh
