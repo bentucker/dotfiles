@@ -41,5 +41,7 @@
     enabled = true
 [diff]
     tool = vimdiff
+[alias]
+    vimdiff = "!GIT_PAGER=" GIT_EXTERNAL_DIFF="git_diff_wrapper.sh git diff"
 [merge]
     tool = vimdiff
