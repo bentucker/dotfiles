@@ -27,6 +27,11 @@ setopt HIST_FIND_NO_DUPS
 setopt NO_SHARE_HISTORY
 MARK_DIRS="true"
 
+alias urldecode='python -c "import sys, urllib as ul; \
+    print ul.unquote_plus(sys.argv[1])"'
+alias urlencode='python -c "import sys, urllib as ul; \
+    print ul.quote_plus(sys.argv[1])"'
+
 # autocorrect exceptions
 alias sudo='nocorrect sudo'
 
