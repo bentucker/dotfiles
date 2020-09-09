@@ -5,6 +5,7 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	autocrlf = input
+    pager = delta --dark --24-bit-color
 [color]
 	ui = auto
 [gpg]
@@ -39,6 +40,8 @@
     default = current
 [rerere]
     enabled = true
+[interactive]
+    diffFilter = delta --color-only
 [diff]
     tool = vimdiff
 [alias]

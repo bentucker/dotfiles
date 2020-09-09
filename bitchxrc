@@ -1,0 +1,21 @@
+set join_new_window on
+set join_new_window_type new hide swap last double on
+set window_destroy_part on
+bind ^x parse_command window next
+bind ^b new_scroll_backward
+bind ^f new_scroll_forward
+set dcc_autorename on
+set dcc_dldir /var/tmp
+
+alias barrier window swap barrier
+
+on connect "*freenode*" {
+    msg nickserv identify <PASSWORD>
+
+        window new hide swap last double on name barrier
+
+        window swap barrier channel #barrier
+
+        addnoflood memoserv
+        addnoflood nickserv
+}
