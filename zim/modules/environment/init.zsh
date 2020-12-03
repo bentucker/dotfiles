@@ -1,55 +1,81 @@
 #
-# generic options and environment settings
+# Generic options and environment settings
 #
 
-# use smart URL pasting and escaping
-autoload -Uz bracketed-paste-url-magic
-zle -N bracketed-paste bracketed-paste-url-magic
-autoload -Uz url-quote-magic
-zle -N self-insert url-quote-magic
+#
+# Changing directories
+#
 
-# Treat single word simple commands without redirection as candidates for resumption of an existing job.
-setopt AUTO_RESUME
+# Perform cd to a directory if the typed command is invalid, but is a directory.
+setopt AUTO_CD
 
-# List jobs in the long format by default.
-setopt LONG_LIST_JOBS
+# Make cd push the old directory to the directory stack.
+setopt AUTO_PUSHD
 
-# Report the status of background jobs immediately, rather than waiting until just before printing a prompt.
-setopt NOTIFY
+# Don't push multiple copies of the same directory to the stack.
+setopt PUSHD_IGNORE_DUPS
 
-# Recognize comments starting with `#`.
+# Don't print the directory stack after pushd or popd.
+setopt PUSHD_SILENT
+
+# Have pushd without arguments act like `pushd ${HOME}`.
+setopt PUSHD_TO_HOME
+
+#
+# Expansion and globbing
+#
+
+# Treat `#`, `~`, and `^` as patterns for filename globbing.
+setopt EXTENDED_GLOB
+
+#
+# History
+#
+
+# The file to save the history in.
+: ${HISTFILE=${ZDOTDIR:-${HOME}}/.zhistory}
+
+# The maximum number of events stored internally and saved in the history file.
+HISTSIZE=10000
+SAVEHIST=10000
+
+# Don't display duplicates when searching the history.
+setopt HIST_FIND_NO_DUPS
+
+# Don't enter immediate duplicates into the history.
+setopt HIST_IGNORE_DUPS
+
+# Remove commands from the history that begin with a space.
+setopt HIST_IGNORE_SPACE
+
+# Don't execute the command directly upon history expansion.
+setopt HIST_VERIFY
+
+# Cause all terminals to share the same history 'session'.
+setopt SHARE_HISTORY
+
+#
+# Input/output
+#
+
+# Allow comments starting with `#` in the interactive shell.
 setopt INTERACTIVE_COMMENTS
 
-# Run all background jobs at a lower priority. This option is set by default.
-unsetopt BG_NICE
+# Disallow `>` to overwrite existing files. Use `>|` or `>!` instead.
+setopt NO_CLOBBER
 
-# Send the HUP signal to running jobs when the shell exits.
-unsetopt HUP
+#
+# Job control
+#
 
-# Report the status of background and suspended jobs before exiting a shell with job control;
-# a second attempt to exit the shell will succeed.
-# NO_CHECK_JOBS is best used only in combination with NO_HUP, else such jobs will be killed automatically.
-unsetopt CHECK_JOBS
+# List jobs in verbose format by default.
+setopt LONG_LIST_JOBS
 
-# Remove path separtor from WORDCHARS.
-WORDCHARS=${WORDCHARS//[\/]}
+# Prevent background jobs being given a lower priority.
+setopt NO_BG_NICE
 
-# Set less or more as the default pager.
-if (( ! ${+PAGER} )); then
-  if (( ${+commands[less]} )); then
-    export PAGER=less
-  else
-    export PAGER=more
-  fi
-fi
+# Prevent status report of jobs on shell exit.
+setopt NO_CHECK_JOBS
 
-# sets the window title and updates upon directory change
-# more work probably needs to be done here to support multiplexers
-if (($+ztermtitle)); then
-  case ${TERM} in
-    xterm*|*rxvt)
-      precmd() { print -Pn "\e]0;${ztermtitle}\a" }
-      precmd  # we execute it once to initialize the window title
-      ;;
-  esac
-fi
+# Prevent SIGHUP to jobs on shell exit.
+setopt NO_HUP

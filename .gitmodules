@@ -16,15 +16,6 @@
 [submodule "vim/bundle/vim-tmux-navigator"]
 	path = vim/bundle/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
-[submodule "zim/modules/history-substring-search/external"]
-    path = zim/modules/history-substring-search/external
-    url = https://github.com/zsh-users/zsh-history-substring-search.git
-[submodule "zim/modules/completion/external"]
-    path = zim/modules/completion/external
-    url = https://github.com/zsh-users/zsh-completions.git
-[submodule "zim/modules/syntax-highlighting/external"]
-    path = zim/modules/syntax-highlighting/external
-    url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "zim/modules/prompt/external-themes/pure"]
     path = zim/modules/prompt/external-themes/pure
     url = https://github.com/sindresorhus/pure.git
@@ -34,9 +25,6 @@
 [submodule "zim/modules/prompt/external-themes/lean"]
     path = zim/modules/prompt/external-themes/lean
     url = https://github.com/miekg/lean
-[submodule "zim/modules/autosuggestions/external"]
-    path = zim/modules/autosuggestions/external
-    url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "vim/bundle/vim-tmux-clipboard"]
 	path = vim/bundle/vim-tmux-clipboard
 	url = https://github.com/roxma/vim-tmux-clipboard.git
@@ -73,3 +61,21 @@
 [submodule "vim/bundle/python-mode"]
 	path = vim/bundle/python-mode
 	url = https://github.com/python-mode/python-mode.git
+[submodule "zim/modules/steeef"]
+	path = zim/modules/steeef
+	url = https://github.com/zimfw/steeef
+[submodule "zim/modules/termtitle"]
+	path = zim/modules/termtitle
+	url = https://github.com/zimfw/termtitle
+[submodule "zim/modules/zsh-autosuggestions"]
+	path = zim/modules/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "zim/modules/zsh-completions"]
+	path = zim/modules/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions
+[submodule "zim/modules/zsh-history-substring-search"]
+	path = zim/modules/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search
+[submodule "zim/modules/zsh-syntax-highlighting"]
+	path = zim/modules/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
