@@ -4,6 +4,7 @@ autoload -Uz git-alias-lookup git-branch-current git-branch-delete-interactive g
 source /home/magma/dotfiles/zim/modules/environment/init.zsh
 source /home/magma/dotfiles/zim/modules/git/init.zsh
 source /home/magma/dotfiles/zim/modules/input/init.zsh
+source /home/magma/dotfiles/zim/modules/termtitle/init.zsh
 source /home/magma/dotfiles/zim/modules/utility/init.zsh
 source /home/magma/dotfiles/zim/modules/powerlevel10k/powerlevel10k.zsh-theme
 source /home/magma/dotfiles/zim/modules/zsh-completions/zsh-completions.plugin.zsh
