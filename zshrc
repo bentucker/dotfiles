@@ -104,6 +104,8 @@ if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
 fi
 source ${ZIM_HOME}/init.zsh
 
+zimfw install
+
 # ------------------------------
 # Post-init module configuration
 # ------------------------------
