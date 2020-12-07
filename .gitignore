@@ -1,3 +1,5 @@
 vim/undodir/*
 **/*.old
 **/*.zwc
+vim/pack/minpac/start
+zim/modules

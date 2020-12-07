@@ -1,68 +1,75 @@
 filetype off
 
-call plug#begin('~/.vim/plugged')
-" various color schemes (neovim default is 'dark'; I like 'slate' with dark background)
-" http://vimcolors.com/
-Plug 'freeo/vim-kalisi'
-Plug 'w0ng/vim-hybrid'
-Plug 'bitterjug/vim-colors-bitterjug'
-Plug 'jonathanfilip/vim-lucius'
-Plug 'crusoexia/vim-monokai'
-Plug 'jacoborus/tender.vim'
-Plug 'pbrisbin/vim-colors-off'
-Plug 'muellan/am-colors'
-Plug 'blueshirts/darcula'
-Plug 'flazz/vim-colorschemes'
+" Try to load minpac.
+packadd minpac
 
-Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'preservim/nerdcommenter'
+if !exists('g:loaded_minpac')
+  " minpac is not available.
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" deoplete (for gocode completion support)
-" https://github.com/Shougo/deoplete.nvim
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-" deoplete-go (for gocode completion support)
-" https://github.com/zchee/deoplete-go
-"Plug 'zchee/deoplete-go', { 'do': 'make'}
-"Plug 'zchee/deoplete-jedi'
-
-Plug 'christoomey/vim-tmux-navigator'
-"Plug 'w0rp/ale'
-Plug 'python-mode/python-mode'
-Plug 'tmhedberg/matchit'
-Plug 'roxma/vim-tmux-clipboard'
-Plug 'posva/vim-vue'
-Plug 'airblade/vim-gitgutter'
-Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
-Plug 'vim-scripts/CycleColor'
-"Plug 'vim-syntastic/syntastic'
-Plug 'jmcantrell/vim-virtualenv'
-Plug 'tpope/vim-fugitive'
-Plug 'majutsushi/tagbar'
-
-" Make vim a first class Go development environment
-" https://github.com/fatih/vim-go
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-
-" indentline
-" https://github.com/Yggdroot/indentLine
-Plug 'Yggdroot/indentLine'
-
-if has('nvim')
-  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Settings for plugin-less environment.
 else
-  Plug 'Shougo/denite.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+  " minpac is available.
+  call minpac#init()
+  call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+  " Additional plugins here.
+  call minpac#add('freeo/vim-kalisi')
+  call minpac#add('w0ng/vim-hybrid')
+  call minpac#add('bitterjug/vim-colors-bitterjug')
+  call minpac#add('jonathanfilip/vim-lucius')
+  call minpac#add('crusoexia/vim-monokai')
+  call minpac#add('jacoborus/tender.vim')
+  call minpac#add('pbrisbin/vim-colors-off')
+  call minpac#add('muellan/am-colors')
+  call minpac#add('blueshirts/darcula')
+  call minpac#add('flazz/vim-colorschemes')
+
+  call minpac#add('preservim/nerdtree', { 'on': 'NERDTreeToggle' })
+  call minpac#add('Xuyuanp/nerdtree-git-plugin')
+  call minpac#add('preservim/nerdcommenter')
+
+  call minpac#add('vim-airline/vim-airline')
+  call minpac#add('vim-airline/vim-airline-themes')
+
+  call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
+
+  call minpac#add('christoomey/vim-tmux-navigator')
+  call minpac#add('w0rp/ale')
+  call minpac#add('python-mode/python-mode')
+  call minpac#add('roxma/vim-tmux-clipboard')
+  call minpac#add('tmux-plugins/vim-tmux-focus-events')
+  call minpac#add('posva/vim-vue')
+  call minpac#add('airblade/vim-gitgutter')
+  call minpac#add('scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'})
+  call minpac#add('vim-scripts/CycleColor')
+  "call minpac#add('vim-syntastic/syntastic')
+  call minpac#add('jmcantrell/vim-virtualenv')
+  call minpac#add('tpope/vim-fugitive')
+  call minpac#add('majutsushi/tagbar')
+
+  " Make vim a first class Go development environment
+  " https://github.com/fatih/vim-go
+  call minpac#add('fatih/vim-go', { 'do': ':GoInstallBinaries' })
+
+  " indentline
+  " https://github.com/Yggdroot/indentLine
+  call minpac#add('Yggdroot/indentLine')
+
+  if has('nvim')
+    call minpac#add('Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' })
+  else
+    call minpac#add('Shougo/denite.nvim')
+    call minpac#add('roxma/nvim-yarp')
+    call minpac#add('roxma/vim-hug-neovim-rpc')
+  endif
+
+  " minpac utility commands
+  command! PackUpdate call minpac#update()
+  command! PackClean call minpac#clean()
+  command! PackStatus call minpac#status()
+
+  " Plugin settings here.
 endif
-" Initialize plugin system
-call plug#end()
 
 if exists('g:vscode')
     " VSCode extension
