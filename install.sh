@@ -1,7 +1,8 @@
 #!/bin/bash
 ############################
-# mksymlinks.sh
-# This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
+# install.sh
+# This script creates symlinks from the home directory to any desired dotfiles in
+# ~/dotfiles and installs zim and vim plugins
 ############################
 
 ########## Variables
@@ -30,3 +31,6 @@ for file in $files; do
     echo "Creating symlink to $file in home directory."
     ln -s $dir/$file ~/.$file
 done
+
+zsh ${HOME}/.zim/zimfw.zsh install
+vim +PackUpdate +":qa\!"
