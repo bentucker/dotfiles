@@ -199,7 +199,7 @@ fi
 test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 
 # Add coursier
-export PATH="$PATH:/home/magma/.local/share/coursier/bin"
+export PATH="$PATH:${HOME}/.local/share/coursier/bin"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR=${HOME}/.sdkman

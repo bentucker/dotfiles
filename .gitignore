@@ -3,3 +3,5 @@ vim/undodir/*
 **/*.zwc
 vim/pack/minpac/start
 zim/modules
+zim/init.zsh
+zim/login_init.zsh

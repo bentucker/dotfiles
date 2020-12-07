@@ -40,7 +40,7 @@ else
   call minpac#add('tmux-plugins/vim-tmux-focus-events')
   call minpac#add('posva/vim-vue')
   call minpac#add('airblade/vim-gitgutter')
-  call minpac#add('scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'})
+  call minpac#add('scalameta/coc-metals', {'do': 'silent! !yarn install --frozen-lockfile'})
   call minpac#add('vim-scripts/CycleColor')
   "call minpac#add('vim-syntastic/syntastic')
   call minpac#add('jmcantrell/vim-virtualenv')
@@ -49,7 +49,7 @@ else
 
   " Make vim a first class Go development environment
   " https://github.com/fatih/vim-go
-  call minpac#add('fatih/vim-go', { 'do': ':GoInstallBinaries' })
+  call minpac#add('fatih/vim-go')
 
   " indentline
   " https://github.com/Yggdroot/indentLine
