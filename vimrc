@@ -12,6 +12,13 @@ else
   call minpac#init()
   call minpac#add('k-takata/minpac', {'type': 'opt'})
 
+  let s:coc_extensions=["coc-metals", "coc-highlight", "coc-git", "coc-python", "coc-go", "coc-json", "coc-rls"]
+
+  function! s:coc_install(hooktype, name)
+      packadd coc.nvim
+      call coc#util#install_extension(s:coc_extensions)
+  endfunction
+
   " Additional plugins here.
   call minpac#add('freeo/vim-kalisi')
   call minpac#add('w0ng/vim-hybrid')
@@ -31,7 +38,7 @@ else
   call minpac#add('vim-airline/vim-airline')
   call minpac#add('vim-airline/vim-airline-themes')
 
-  call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
+  call minpac#add('neoclide/coc.nvim', {'branch': 'release', 'do': function('s:coc_install')})
 
   call minpac#add('christoomey/vim-tmux-navigator')
   call minpac#add('w0rp/ale')
@@ -69,6 +76,167 @@ else
   command! PackStatus call minpac#status()
 
   " Plugin settings here.
+
+  " =====================================
+  " auto completion
+  " =====================================
+  set completeopt+=noinsert
+  set completeopt+=noselect
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#sources#go#use_cache = 1
+
+  " toggle tagbar
+  nnoremap <silent> <leader>tb :TagbarToggle<CR>
+
+  " coc
+  " Some servers have issues with backup files
+  set nobackup
+  set nowritebackup
+
+  " You will have a bad experience with diagnostic messages with the default 4000.
+  set updatetime=300
+
+  " Don't give |ins-completion-menu| messages.
+  set shortmess+=c
+
+  " Always show signcolumns
+  set signcolumn=yes
+
+  "command! -nargs=0 Prettier :CocCommand prettier.formatFile
+  vmap <leader>f  <Plug>(coc-format-selected)
+  nmap <leader>f  <Plug>(coc-format-selected)
+  nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+
+  " Use tab for trigger completion with characters ahead and navigate.
+  " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+  inoremap <silent><expr> <TAB>
+              \ pumvisible() ? "\<C-n>" :
+              \ <SID>check_back_space() ? "\<TAB>" :
+              \ coc#refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  " Used in the tab autocompletion for coc
+  function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  " Use <c-space> to trigger completion.
+  inoremap <silent><expr> <c-space> coc#refresh()
+
+  " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+  " Coc only does snippet and additional edit on confirm.
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+  " Use `[g` and `]g` to navigate diagnostics
+  nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+  " Remap keys for gotos
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+
+  " Used to expand decorations in worksheets
+  nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+
+  " Use K to either doHover or show documentation in preview window
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+  function! s:show_documentation()
+      if (index(['vim','help'], &filetype) >= 0)
+          execute 'h '.expand('<cword>')
+      else
+          call CocAction('doHover')
+      endif
+  endfunction
+
+  " Highlight symbol under cursor on CursorHold
+  if exists("*CocActionAsync")
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+  endif
+
+  " Remap for rename current word
+  nmap <leader>rn <Plug>(coc-rename)
+
+  " Remap for format selected region
+  xmap <leader>f  <Plug>(coc-format-selected)
+  nmap <leader>f  <Plug>(coc-format-selected)
+
+  augroup mygroup
+      autocmd!
+      " Setup formatexpr specified filetype(s).
+      autocmd FileType scala setl formatexpr=CocAction('formatSelected')
+      " Update signature help on jump placeholder
+      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  augroup end
+
+  " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+  xmap <leader>a  <Plug>(coc-codeaction-selected)
+  nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+  " Remap for do codeAction of current line
+  nmap <leader>ac  <Plug>(coc-codeaction)
+  " Fix autofix problem of current line
+  nmap <leader>qf  <Plug>(coc-fix-current)
+
+  " Use `:Format` to format current buffer
+  command! -nargs=0 Format :call CocAction('format')
+
+  " Use `:Fold` to fold current buffer
+  command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+  " Trigger for code actions
+  " Make sure `"codeLens.enable": true` is set in your coc config
+  nnoremap <leader>cl :<C-u>call CocActionAsync('codeLensAction')<CR>
+
+  " Show all diagnostics
+  nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+  " Manage extensions
+  nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+  " Show commands
+  nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+  " Find symbol of current document
+  nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+  " Search workspace symbols
+  nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+  " Do default action for next item.
+  nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+  " Do default action for previous item.
+  nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+  " Resume latest coc list
+  nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+  " Notify coc.nvim that <enter> has been pressed.
+  " Currently used for the formatOnType feature.
+  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+  " Toggle panel with Tree Views
+  nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
+  " Toggle Tree View 'metalsBuild'
+  nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+  " Toggle Tree View 'metalsCompile'
+  nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+  " Reveal current current class (trait or object) in Tree View 'metalsBuild'
+  nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+
+  " open NERDTree with Ctrl-N
+  nmap <C-n> :NERDTreeToggle<cr>
+
+  " tmux-navigator
+  " Write all buffers before navigating from Vim to tmux pane
+  let g:tmux_navigator_save_on_switch = 2
+  " Disable tmux navigator when zooming the Vim pane
+  let g:tmux_navigator_disable_when_zoomed = 1
+
+  " python-mode
+  let g:pymode_rope_autoimport = 0
+
+  " vim-vue
+  let g:vue_pre_processors = 'detect_on_enter'
+
 endif
 
 if exists('g:vscode')
@@ -137,17 +305,6 @@ nnoremap <leader>P "+P
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 
-" =====================================
-" auto completion
-" =====================================
-set completeopt+=noinsert
-set completeopt+=noselect
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go#use_cache = 1
-
-" toggle tagbar
-nnoremap <silent> <leader>tb :TagbarToggle<CR>
-
 " toggle line numbers
 nnoremap <silent> <leader>n :set number! number?<CR>
 
@@ -187,13 +344,6 @@ let s:undos = split(globpath(&undodir, '*'), "\n")
 call filter(s:undos, 'getftime(v:val) < localtime() - (60 * 60 * 24 * 90)')
 call map(s:undos, 'delete(v:val)')
 
-"command! -nargs=0 Prettier :CocCommand prettier.formatFile
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
-
-" Configuration for vim-scala
-au BufRead,BufNewFile *.sbt set filetype=scala
 autocmd FileType json syntax match Comment +\/\/.\+$+
 augroup XML
     autocmd!
@@ -202,15 +352,6 @@ augroup XML
     autocmd FileType xml :syntax on
     autocmd FileType xml :%foldopen!
 augroup END
-
-au BufNewFile,BufRead *.pgf set filetype=tex
-let g:Tex_CompileRule_dvi = 'lualatex -interaction=nonstopmode $*'
-
-" vim-vue
-let g:vue_pre_processors = 'detect_on_enter'
-
-" open NERDTree with Ctrl-N
-nmap <C-n> :NERDTreeToggle<cr>
 
 "if has("gui_running")
     "" set transparency=15
@@ -238,11 +379,6 @@ if has("termguicolors")
     "set t_8b=\[[48;2;%lu;%lu;%lum
     "set termguicolors
 endif
-
-" Write all buffers before navigating from Vim to tmux pane
-let g:tmux_navigator_save_on_switch = 2
-" Disable tmux navigator when zooming the Vim pane
-let g:tmux_navigator_disable_when_zoomed = 1
 
 "let g:airline_extensions = ['branch', 'tabline', 'denite', 'zoomwintab', 'fugitive', 'coc', 'bufferline']
 "let g:airline_enable_branch=1
@@ -273,137 +409,5 @@ if has("gui_running")
 else
     set bg=dark
 endif
-let g:pymode_rope_autoimport = 0
-
-" Configuration for coc.nvim
-
-" If hidden is not set, TextEdit might fail.
-" set hidden
-" 
-" Some servers have issues with backup files
-set nobackup
-set nowritebackup
-
-" You will have a bad experience with diagnostic messages with the default 4000.
-set updatetime=300
-
-" Don't give |ins-completion-menu| messages.
-set shortmess+=c
-
-" Always show signcolumns
-set signcolumn=yes
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" Used in the tab autocompletion for coc
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Used to expand decorations in worksheets
-nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
-
-" Use K to either doHover or show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-augroup mygroup
-    autocmd!
-    " Setup formatexpr specified filetype(s).
-    autocmd FileType scala setl formatexpr=CocAction('formatSelected')
-    " Update signature help on jump placeholder
-    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Trigger for code actions
-" Make sure `"codeLens.enable": true` is set in your coc config
-nnoremap <leader>cl :<C-u>call CocActionAsync('codeLensAction')<CR>
-
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-" Notify coc.nvim that <enter> has been pressed.
-" Currently used for the formatOnType feature.
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" Toggle panel with Tree Views
-nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
-" Toggle Tree View 'metalsBuild'
-nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
-" Toggle Tree View 'metalsCompile'
-nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
-" Reveal current current class (trait or object) in Tree View 'metalsBuild'
-nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
 
 autocmd VimEnter * wincmd p
