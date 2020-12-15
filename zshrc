@@ -196,7 +196,14 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
+if [[ -a ~/.dir_colors ]]; then
+  if whence dircolors >/dev/null; then
+    eval "$(dircolors ~/.dir_colors)"
+  elif whence gdircolors >/dev/null; then
+    eval "$(gdircolors ~/.dir_colors)"
+    export CLICOLOR=1
+  fi
+fi
 
 # Add coursier
 export PATH="$PATH:${HOME}/.local/share/coursier/bin"
